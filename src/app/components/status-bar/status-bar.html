@@ -1,0 +1,41 @@
+<footer class="h-8 border-t border-neutral-800 bg-[#121212] px-4 flex items-center justify-between shrink-0 select-none text-[10px] text-neutral-500 uppercase tracking-widest z-30">
+  <div class="flex items-center space-x-6">
+    <div class="flex items-center">
+      <span class="mr-2 text-neutral-600">DIM:</span>
+      <span class="text-neutral-300 font-mono">{{ editor.imageWidth() }} x {{ editor.imageHeight() }} PX</span>
+    </div>
+    <div class="hidden sm:flex items-center">
+      <span class="mr-2 text-neutral-600">FILTER:</span>
+      <span class="text-indigo-400 font-semibold">{{ editor.activeFilter() }}</span>
+    </div>
+    <div class="hidden md:flex items-center">
+      <span class="mr-2 text-neutral-600">COLOR SPACE:</span>
+      <span class="text-neutral-300">sRGB (8-bit)</span>
+    </div>
+  </div>
+
+  <!-- Toast / Status Message -->
+  <div class="flex items-center gap-2">
+    @if (editor.toastMessage(); as toast) {
+      <div
+        [class.bg-emerald-950/80]="toast.type === 'success'"
+        [class.text-emerald-300]="toast.type === 'success'"
+        [class.border-emerald-800]="toast.type === 'success'"
+        [class.bg-red-950/80]="toast.type === 'error'"
+        [class.text-red-300]="toast.type === 'error'"
+        [class.border-red-800]="toast.type === 'error'"
+        [class.bg-indigo-950/80]="toast.type === 'info'"
+        [class.text-indigo-300]="toast.type === 'info'"
+        [class.border-indigo-800]="toast.type === 'info'"
+        class="px-2.5 py-0.5 rounded-full border text-[10px] font-medium tracking-normal normal-case flex items-center gap-1 shadow animate-fade-in"
+      >
+        <mat-icon class="text-xs">info</mat-icon>
+        <span>{{ toast.text }}</span>
+      </div>
+    } @else {
+      <div class="text-[10px] text-neutral-500 normal-case">
+        Ready • Studio Pro Engine
+      </div>
+    }
+  </div>
+</footer>

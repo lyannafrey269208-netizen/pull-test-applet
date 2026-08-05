@@ -1,0 +1,128 @@
+<div class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="bg-[#121212] border border-neutral-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden text-neutral-300">
+    <!-- Header -->
+    <div class="p-4 border-b border-neutral-800 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <mat-icon class="text-indigo-400">download</mat-icon>
+        <h3 class="text-base font-bold text-white">Export Image</h3>
+      </div>
+      <button
+        type="button"
+        (click)="closeModal.emit()"
+        class="p-1 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Export Controls -->
+    <div class="p-6 space-y-6">
+      <!-- Format Selection -->
+      <div class="space-y-2">
+        <span class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider">File Format</span>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            type="button"
+            (click)="format.set('image/jpeg')"
+            [class.bg-indigo-600]="format() === 'image/jpeg'"
+            [class.text-white]="format() === 'image/jpeg'"
+            class="py-2 bg-neutral-900 border border-neutral-800 rounded-xl text-xs font-semibold hover:border-neutral-700 transition-colors"
+          >
+            JPEG
+          </button>
+          <button
+            type="button"
+            (click)="format.set('image/png')"
+            [class.bg-indigo-600]="format() === 'image/png'"
+            [class.text-white]="format() === 'image/png'"
+            class="py-2 bg-neutral-900 border border-neutral-800 rounded-xl text-xs font-semibold hover:border-neutral-700 transition-colors"
+          >
+            PNG
+          </button>
+          <button
+            type="button"
+            (click)="format.set('image/webp')"
+            [class.bg-indigo-600]="format() === 'image/webp'"
+            [class.text-white]="format() === 'image/webp'"
+            class="py-2 bg-neutral-900 border border-neutral-800 rounded-xl text-xs font-semibold hover:border-neutral-700 transition-colors"
+          >
+            WebP
+          </button>
+        </div>
+      </div>
+
+      <!-- Quality Slider (for JPG & WebP) -->
+      @if (format() !== 'image/png') {
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between font-semibold">
+            <span class="text-neutral-400 uppercase tracking-wider">Quality</span>
+            <span class="text-indigo-400 font-mono">{{ quality() }}%</span>
+          </div>
+          <input
+            type="range"
+            min="10"
+            max="100"
+            [ngModel]="quality()"
+            (ngModelChange)="quality.set($event)"
+            class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+          />
+        </div>
+      }
+
+      <!-- Resolution Scaling -->
+      <div class="space-y-2">
+        <span class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider">Output Scale</span>
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <button
+            type="button"
+            (click)="scale.set(0.5)"
+            [class.bg-indigo-600]="scale() === 0.5"
+            [class.text-white]="scale() === 0.5"
+            class="py-2 bg-neutral-900 border border-neutral-800 rounded-xl font-medium"
+          >
+            0.5x
+          </button>
+          <button
+            type="button"
+            (click)="scale.set(1)"
+            [class.bg-indigo-600]="scale() === 1"
+            [class.text-white]="scale() === 1"
+            class="py-2 bg-neutral-900 border border-neutral-800 rounded-xl font-medium"
+          >
+            1x Original
+          </button>
+          <button
+            type="button"
+            (click)="scale.set(2)"
+            [class.bg-indigo-600]="scale() === 2"
+            [class.text-white]="scale() === 2"
+            class="py-2 bg-neutral-900 border border-neutral-800 rounded-xl font-medium"
+          >
+            2x Retina
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="pt-2 space-y-2">
+        <button
+          type="button"
+          (click)="downloadImage()"
+          class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all"
+        >
+          <mat-icon>download</mat-icon>
+          <span>Download Image File</span>
+        </button>
+
+        <button
+          type="button"
+          (click)="copyImageToClipboard()"
+          class="w-full py-2.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold rounded-xl border border-neutral-700 flex items-center justify-center gap-2 transition-colors"
+        >
+          <mat-icon class="text-base">content_copy</mat-icon>
+          <span>Copy Image to Clipboard</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

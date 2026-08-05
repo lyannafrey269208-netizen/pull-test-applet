@@ -1,0 +1,48 @@
+<div class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="bg-[#121212] border border-neutral-800 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden text-neutral-300">
+    <!-- Header -->
+    <div class="p-4 border-b border-neutral-800 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <mat-icon class="text-indigo-400">photo_camera</mat-icon>
+        <h3 class="text-base font-bold text-white">Take Webcam Photo</h3>
+      </div>
+      <button
+        type="button"
+        (click)="closeModal.emit()"
+        class="p-1 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Video Feed -->
+    <div class="p-6 flex flex-col items-center justify-center space-y-4">
+      @if (hasPermission()) {
+        <div class="relative w-full aspect-video bg-neutral-950 rounded-xl overflow-hidden border border-neutral-800">
+          <video
+            #videoElement
+            autoplay
+            playsinline
+            class="w-full h-full object-cover"
+          ></video>
+        </div>
+
+        <button
+          type="button"
+          (click)="captureSnapshot()"
+          class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition-all"
+        >
+          <mat-icon>camera</mat-icon>
+          <span>Capture Photo</span>
+        </button>
+      } @else {
+        <div class="p-8 text-center space-y-3">
+          <mat-icon class="text-4xl text-red-400">videocam_off</mat-icon>
+          <p class="text-xs text-neutral-400">
+            {{ errorMessage() }}
+          </p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

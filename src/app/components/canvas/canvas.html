@@ -1,0 +1,115 @@
+<div class="relative w-full h-full bg-[#1A1A1A] flex flex-col items-center justify-center overflow-hidden select-none" #canvasContainer>
+  
+  <!-- Canvas Workspace Stage -->
+  <div class="relative flex items-center justify-center p-8 max-w-full max-h-full overflow-auto">
+    <!-- Image Canvas Container with Elegant Border & Shadow -->
+    <div
+      class="relative bg-checkerboard shadow-2xl rounded-sm border border-neutral-800 overflow-hidden transition-transform duration-75"
+      [style.transform]="canvasTransformStyle()"
+    >
+      <canvas
+        #canvasElement
+        class="block max-w-[80vw] max-h-[70vh] object-contain cursor-crosshair"
+        (mousedown)="onCanvasMouseDown($event)"
+        (mousemove)="onCanvasMouseMove($event)"
+      ></canvas>
+
+      <!-- Text Overlays -->
+      @for (item of editor.textItems(); track item.id) {
+        <div
+          class="absolute cursor-move select-none border border-dashed hover:border-indigo-400 p-1 rounded transition-colors group"
+          [class.border-indigo-500]="editor.selectedTextId() === item.id"
+          [class.border-transparent]="editor.selectedTextId() !== item.id"
+          [style.left.%]="item.x"
+          [style.top.%]="item.y"
+          [style.color]="item.color"
+          [style.fontSize.px]="item.fontSize"
+          [style.fontFamily]="item.fontFamily"
+          [style.fontWeight]="item.bold ? 'bold' : 'normal'"
+          [style.fontStyle]="item.italic ? 'italic' : 'normal'"
+          (mousedown)="startTextDrag($event, item)"
+        >
+          <span>{{ item.text }}</span>
+          <!-- Delete button on hover -->
+          <button
+            type="button"
+            (click)="editor.removeTextOverlay(item.id); $event.stopPropagation()"
+            class="hidden group-hover:flex absolute -top-3 -right-3 w-5 h-5 bg-red-600 text-white rounded-full items-center justify-center text-xs shadow"
+          >
+            ×
+          </button>
+        </div>
+      }
+
+      <!-- Crop Guidelines Overlay when Crop tool active -->
+      @if (editor.activeTool() === 'crop') {
+        <div class="absolute inset-0 pointer-events-none border-2 border-white/80">
+          <div class="w-full h-full grid grid-cols-3 grid-rows-3">
+            <div class="border-r border-b border-white/20"></div>
+            <div class="border-r border-b border-white/20"></div>
+            <div class="border-b border-white/20"></div>
+            <div class="border-r border-b border-white/20"></div>
+            <div class="border-r border-b border-white/20"></div>
+            <div class="border-b border-white/20"></div>
+            <div class="border-r border-white/20"></div>
+            <div class="border-r border-white/20"></div>
+            <div></div>
+          </div>
+          <!-- Corner Crop Handles -->
+          <div class="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-white"></div>
+          <div class="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-white"></div>
+          <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-white"></div>
+          <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-white"></div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- AI Processing Overlay -->
+  @if (editor.isAiProcessing()) {
+    <div class="absolute inset-0 bg-neutral-950/80 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-6 text-center">
+      <div class="w-16 h-16 relative flex items-center justify-center mb-4">
+        <div class="absolute inset-0 rounded-full border-4 border-indigo-500/20 border-t-indigo-500 animate-spin"></div>
+        <mat-icon class="text-2xl text-indigo-400 animate-pulse">auto_awesome</mat-icon>
+      </div>
+      <h3 class="text-base font-semibold text-white tracking-wide mb-1">
+        Gemini AI Magic in Progress
+      </h3>
+      <p class="text-xs text-neutral-400 max-w-md">
+        {{ editor.aiStatusMessage() }}
+      </p>
+    </div>
+  }
+
+  <!-- Floating Zoom & View Control Bar -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-[#121212]/90 backdrop-blur-md px-4 py-2 rounded-full border border-neutral-700/80 shadow-xl z-20 text-neutral-300">
+    <button
+      type="button"
+      (click)="zoomOut()"
+      title="Zoom Out"
+      class="w-7 h-7 rounded-full hover:bg-neutral-800 flex items-center justify-center text-neutral-300 hover:text-white transition-colors"
+    >
+      <mat-icon class="text-sm">remove</mat-icon>
+    </button>
+    <span class="text-xs font-mono font-medium text-neutral-200 min-w-[45px] text-center">
+      {{ editor.zoomLevel() }}%
+    </span>
+    <button
+      type="button"
+      (click)="zoomIn()"
+      title="Zoom In"
+      class="w-7 h-7 rounded-full hover:bg-neutral-800 flex items-center justify-center text-neutral-300 hover:text-white transition-colors"
+    >
+      <mat-icon class="text-sm">add</mat-icon>
+    </button>
+    <div class="w-px h-4 bg-neutral-700"></div>
+    <button
+      type="button"
+      (click)="resetZoom()"
+      title="Reset Zoom"
+      class="px-2.5 py-1 text-[11px] font-medium text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-md transition-colors"
+    >
+      Fit
+    </button>
+  </div>
+</div>

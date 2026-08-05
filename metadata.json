@@ -1,0 +1,6 @@
+{
+  "name": "Image Editor",
+  "description": "A comprehensive image editing studio featuring client-side canvas adjustment tools, filters, crop & transform, drawing, annotations, and Gemini AI auto-enhancement and prompt editing.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

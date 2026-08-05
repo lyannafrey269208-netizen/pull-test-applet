@@ -1,0 +1,135 @@
+<header class="h-16 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between gap-4 text-slate-100 select-none z-30">
+  <!-- Brand Logo & Image Title -->
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+      <mat-icon class="text-white">auto_fix_high</mat-icon>
+    </div>
+    <div>
+      <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+        Image Editor
+        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+          Studio Pro
+        </span>
+      </h1>
+      <p class="text-xs text-slate-400 truncate max-w-[180px] sm:max-w-[280px]">
+        {{ editor.imageName() }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Center Quick Actions -->
+  <div class="hidden md:flex items-center gap-1.5 bg-slate-850 p-1 rounded-xl border border-slate-800">
+    <!-- Undo / Redo -->
+    <button
+      id="btn-undo"
+      type="button"
+      (click)="editor.undo()"
+      [disabled]="!editor.canUndo()"
+      title="Undo"
+      class="p-2 rounded-lg hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent text-slate-300 hover:text-white transition-colors"
+    >
+      <mat-icon class="text-xl">undo</mat-icon>
+    </button>
+    <button
+      id="btn-redo"
+      type="button"
+      (click)="editor.redo()"
+      [disabled]="!editor.canRedo()"
+      title="Redo"
+      class="p-2 rounded-lg hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent text-slate-300 hover:text-white transition-colors"
+    >
+      <mat-icon class="text-xl">redo</mat-icon>
+    </button>
+
+    <div class="w-px h-5 bg-slate-800 mx-1"></div>
+
+    <!-- Compare Original -->
+    <button
+      id="btn-compare"
+      type="button"
+      (click)="toggleCompare()"
+      [class.bg-blue-600]="editor.isComparingOriginal()"
+      [class.text-white]="editor.isComparingOriginal()"
+      class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-800 text-xs font-medium text-slate-300 transition-colors"
+    >
+      <mat-icon class="text-base">compare</mat-icon>
+      <span>{{ editor.isComparingOriginal() ? 'Comparing...' : 'Compare' }}</span>
+    </button>
+
+    <!-- Reset All -->
+    <button
+      id="btn-reset"
+      type="button"
+      (click)="editor.resetAll()"
+      title="Reset all edits"
+      class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-800 text-xs font-medium text-slate-400 hover:text-slate-200 transition-colors"
+    >
+      <mat-icon class="text-base">restart_alt</mat-icon>
+      <span>Reset</span>
+    </button>
+  </div>
+
+  <!-- Right Actions -->
+  <div class="flex items-center gap-2">
+    <!-- AI Auto-Tune Quick Button -->
+    <button
+      id="btn-header-ai"
+      type="button"
+      (click)="editor.runAiAutoTune()"
+      [disabled]="editor.isAiProcessing()"
+      class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-md shadow-purple-600/20 transition-all disabled:opacity-50"
+    >
+      <mat-icon class="text-base animate-pulse">auto_awesome</mat-icon>
+      <span>AI Auto-Tune</span>
+    </button>
+
+    <!-- Sample Gallery Trigger -->
+    <button
+      id="btn-sample-gallery"
+      type="button"
+      (click)="openSampleGallery.emit()"
+      class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition-colors"
+    >
+      <mat-icon class="text-base text-blue-400">collections</mat-icon>
+      <span class="hidden sm:inline">Samples</span>
+    </button>
+
+    <!-- Webcam Button -->
+    <button
+      id="btn-webcam"
+      type="button"
+      (click)="openWebcamModal.emit()"
+      title="Take Webcam Photo"
+      class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
+    >
+      <mat-icon class="text-lg">photo_camera</mat-icon>
+    </button>
+
+    <!-- Upload Button -->
+    <label
+      id="label-upload"
+      class="cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition-colors"
+    >
+      <mat-icon class="text-base text-emerald-400">upload_file</mat-icon>
+      <span class="hidden sm:inline">Upload</span>
+      <input
+        id="input-file-upload"
+        type="file"
+        accept="image/*"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+    </label>
+
+    <!-- Download/Export Trigger -->
+    <button
+      id="btn-header-export"
+      type="button"
+      (click)="openExportModal.emit()"
+      class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow-md shadow-blue-600/30 transition-all"
+    >
+      <mat-icon class="text-base">download</mat-icon>
+      <span>Export</span>
+    </button>
+  </div>
+</header>

@@ -1,0 +1,46 @@
+<div class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="bg-[#121212] border border-neutral-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden text-neutral-300">
+    <!-- Header -->
+    <div class="p-4 border-b border-neutral-800 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <mat-icon class="text-indigo-400">collections</mat-icon>
+        <h3 class="text-base font-bold text-white">Sample Image Gallery</h3>
+      </div>
+      <button
+        type="button"
+        (click)="closeModal.emit()"
+        class="p-1 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="p-6 grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto">
+      @for (sample of samples; track sample.id) {
+        <button
+          type="button"
+          (click)="selectSample(sample)"
+          class="group text-left rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800 hover:border-indigo-500 transition-all hover:scale-[1.02] focus:outline-none"
+        >
+          <div class="h-32 w-full overflow-hidden relative">
+            <img
+              [src]="sample.thumb"
+              [alt]="sample.name"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              referrerpolicy="no-referrer"
+            />
+            <span class="absolute top-2 left-2 px-2 py-0.5 bg-neutral-950/70 text-[10px] font-semibold text-neutral-300 rounded-md backdrop-blur-sm">
+              {{ sample.category }}
+            </span>
+          </div>
+          <div class="p-3">
+            <div class="text-xs font-semibold text-white group-hover:text-indigo-400 transition-colors">
+              {{ sample.name }}
+            </div>
+          </div>
+        </button>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,196 @@
+import { FilterPreset, ImageAdjustments, SampleImage } from '../models/image-editor.models';
+
+export const DEFAULT_ADJUSTMENTS: ImageAdjustments = {
+  brightness: 0,
+  contrast: 0,
+  saturation: 0,
+  exposure: 0,
+  vibrance: 0,
+  warmth: 0,
+  tint: 0,
+  sepia: 0,
+  blur: 0,
+  sharpen: 0,
+  vignette: 0,
+  hueShift: 0,
+  invert: 0,
+  grayscale: 0,
+};
+
+export const SAMPLE_IMAGES: SampleImage[] = [
+  {
+    id: 'mountain-lake',
+    name: 'Alpine Mirror Lake',
+    category: 'Landscape',
+    url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80',
+    thumb: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    id: 'cyberpunk-tokyo',
+    name: 'Neon Tokyo Alley',
+    category: 'Urban',
+    url: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1600&q=80',
+    thumb: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    id: 'portrait-sunlight',
+    name: 'Golden Hour Portrait',
+    category: 'Portrait',
+    url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1600&q=80',
+    thumb: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    id: 'tropical-beach',
+    name: 'Turquoise Coast',
+    category: 'Travel',
+    url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80',
+    thumb: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    id: 'foggy-forest',
+    name: 'Mystic Forest',
+    category: 'Nature',
+    url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80',
+    thumb: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    id: 'minimalist-arch',
+    name: 'Modern Architecture',
+    category: 'Architecture',
+    url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80',
+    thumb: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80',
+  }
+];
+
+export const FILTER_PRESETS: FilterPreset[] = [
+  {
+    id: 'none',
+    name: 'Original',
+    description: 'No filters applied',
+    adjustments: {},
+  },
+  {
+    id: 'cinematic',
+    name: 'Cinematic',
+    description: 'Deep shadows, teal & orange color grade',
+    adjustments: {
+      contrast: 22,
+      saturation: 15,
+      exposure: -5,
+      warmth: 12,
+      tint: -10,
+      vignette: 25,
+      sharpen: 2,
+    },
+  },
+  {
+    id: 'vintage',
+    name: 'Vintage 70s',
+    description: 'Warm analog film look with faded blacks and sepia glow',
+    adjustments: {
+      brightness: 8,
+      contrast: -12,
+      saturation: -18,
+      warmth: 35,
+      sepia: 28,
+      vignette: 35,
+    },
+  },
+  {
+    id: 'noir',
+    name: 'Classic Noir',
+    description: 'High contrast dramatic monochrome',
+    adjustments: {
+      grayscale: 100,
+      contrast: 40,
+      brightness: -5,
+      vignette: 45,
+      sharpen: 4,
+    },
+  },
+  {
+    id: 'cyberpunk',
+    name: 'Cyberpunk',
+    description: 'Vibrant neon blues, pinks, and boosted clarity',
+    adjustments: {
+      contrast: 30,
+      saturation: 50,
+      tint: 40,
+      hueShift: -15,
+      vignette: 20,
+      sharpen: 3,
+    },
+  },
+  {
+    id: 'vibrant',
+    name: 'Vibrant Pop',
+    description: 'Punchy saturated colors with crisp highlights',
+    adjustments: {
+      brightness: 5,
+      contrast: 18,
+      saturation: 45,
+      vibrance: 35,
+      sharpen: 2,
+    },
+  },
+  {
+    id: 'cool',
+    name: 'Cool Breeze',
+    description: 'Refreshing blue undertones and clean highlights',
+    adjustments: {
+      brightness: 4,
+      contrast: 10,
+      warmth: -30,
+      saturation: 10,
+      tint: -15,
+    },
+  },
+  {
+    id: 'warmGlow',
+    name: 'Sunset Glow',
+    description: 'Golden hour warmth and rich amber tones',
+    adjustments: {
+      brightness: 10,
+      contrast: 12,
+      warmth: 40,
+      saturation: 25,
+      tint: 10,
+    },
+  },
+  {
+    id: 'pastel',
+    name: 'Soft Pastel',
+    description: 'Dreamy low contrast and airy muted palette',
+    adjustments: {
+      brightness: 15,
+      contrast: -25,
+      saturation: -20,
+      warmth: 15,
+      exposure: 10,
+    },
+  },
+  {
+    id: 'hdr',
+    name: 'HDR Clarity',
+    description: 'Maximum texture detail, vivid range, and sharpness',
+    adjustments: {
+      contrast: 35,
+      saturation: 25,
+      vibrance: 30,
+      sharpen: 6,
+      exposure: 5,
+    },
+  },
+  {
+    id: 'dramatic',
+    name: 'Moody Dark',
+    description: 'Dark atmospheric tones with rich focal subject',
+    adjustments: {
+      brightness: -15,
+      contrast: 32,
+      exposure: -10,
+      saturation: -15,
+      vignette: 55,
+    },
+  },
+];

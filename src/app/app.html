@@ -1,0 +1,38 @@
+<div class="flex flex-col h-screen w-screen bg-[#0A0A0A] text-neutral-300 font-sans overflow-hidden select-none">
+  <!-- Top Navigation Bar -->
+  <app-header
+    (openSampleGallery)="isSampleModalOpen.set(true)"
+    (openWebcamModal)="isWebcamModalOpen.set(true)"
+    (openExportModal)="isExportModalOpen.set(true)"
+  />
+
+  <!-- Main Workspace -->
+  <div class="flex-1 flex overflow-hidden relative">
+    <!-- Left Icon Tools Panel -->
+    <app-left-toolbar />
+
+    <!-- Central Interactive Canvas Area -->
+    <main class="flex-1 h-full relative overflow-hidden bg-[#1A1A1A]">
+      <app-canvas />
+    </main>
+
+    <!-- Right Adjustments & Controls Sidebar -->
+    <app-sidebar />
+  </div>
+
+  <!-- Bottom Status Bar -->
+  <app-status-bar />
+
+  <!-- Modals -->
+  @if (isSampleModalOpen()) {
+    <app-sample-modal (closeModal)="isSampleModalOpen.set(false)" />
+  }
+
+  @if (isWebcamModalOpen()) {
+    <app-webcam-modal (closeModal)="isWebcamModalOpen.set(false)" />
+  }
+
+  @if (isExportModalOpen()) {
+    <app-export-modal (closeModal)="isExportModalOpen.set(false)" />
+  }
+</div>

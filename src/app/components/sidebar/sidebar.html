@@ -1,0 +1,601 @@
+<aside class="w-80 h-full bg-[#121212] border-l border-neutral-800 flex flex-col shrink-0 select-none text-neutral-300">
+  
+  <!-- Navigation Tabs -->
+  <div class="flex border-b border-neutral-800 bg-[#0f0f0f] p-1 gap-1 overflow-x-auto text-xs font-semibold">
+    <button
+      type="button"
+      (click)="setTool('adjust')"
+      [class.bg-indigo-600]="editor.activeTool() === 'adjust'"
+      [class.text-white]="editor.activeTool() === 'adjust'"
+      [class.text-neutral-400]="editor.activeTool() !== 'adjust'"
+      class="flex-1 py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 hover:text-white transition-all whitespace-nowrap"
+    >
+      <mat-icon class="text-base">tune</mat-icon>
+      <span>Adjust</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="setTool('filters')"
+      [class.bg-indigo-600]="editor.activeTool() === 'filters'"
+      [class.text-white]="editor.activeTool() === 'filters'"
+      [class.text-neutral-400]="editor.activeTool() !== 'filters'"
+      class="flex-1 py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 hover:text-white transition-all whitespace-nowrap"
+    >
+      <mat-icon class="text-base">filter_vintage</mat-icon>
+      <span>Filters</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="setTool('crop')"
+      [class.bg-indigo-600]="editor.activeTool() === 'crop'"
+      [class.text-white]="editor.activeTool() === 'crop'"
+      [class.text-neutral-400]="editor.activeTool() !== 'crop'"
+      class="flex-1 py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 hover:text-white transition-all whitespace-nowrap"
+    >
+      <mat-icon class="text-base">crop</mat-icon>
+      <span>Crop</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="setTool('draw')"
+      [class.bg-indigo-600]="editor.activeTool() === 'draw'"
+      [class.text-white]="editor.activeTool() === 'draw'"
+      [class.text-neutral-400]="editor.activeTool() !== 'draw'"
+      class="flex-1 py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 hover:text-white transition-all whitespace-nowrap"
+    >
+      <mat-icon class="text-base">brush</mat-icon>
+      <span>Draw</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="setTool('ai')"
+      [class.bg-indigo-600]="editor.activeTool() === 'ai'"
+      [class.text-white]="editor.activeTool() === 'ai'"
+      [class.text-neutral-400]="editor.activeTool() !== 'ai'"
+      class="flex-1 py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 hover:text-white transition-all whitespace-nowrap"
+    >
+      <mat-icon class="text-base text-indigo-400">auto_awesome</mat-icon>
+      <span>AI Studio</span>
+    </button>
+  </div>
+
+  <!-- Tab Content Area -->
+  <div class="flex-1 overflow-y-auto p-5 space-y-6">
+
+    <!-- TAB 1: ADJUSTMENTS -->
+    @if (editor.activeTool() === 'adjust') {
+      <div class="space-y-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs uppercase font-bold text-neutral-500 tracking-wider">
+            Color & Light Adjustments
+          </h3>
+          <button
+            type="button"
+            (click)="editor.resetAdjustmentsAndTransform()"
+            class="text-[11px] text-indigo-400 hover:underline"
+          >
+            Reset
+          </button>
+        </div>
+
+        <!-- Sliders Group -->
+        <div class="space-y-5 text-xs">
+          <!-- Exposure -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Exposure</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().exposure }}</span>
+            </div>
+            <input
+              type="range"
+              min="-100"
+              max="100"
+              [ngModel]="editor.adjustments().exposure"
+              (ngModelChange)="editor.updateAdjustment('exposure', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Brightness -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Brightness</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().brightness }}</span>
+            </div>
+            <input
+              type="range"
+              min="-100"
+              max="100"
+              [ngModel]="editor.adjustments().brightness"
+              (ngModelChange)="editor.updateAdjustment('brightness', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Contrast -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Contrast</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().contrast }}</span>
+            </div>
+            <input
+              type="range"
+              min="-100"
+              max="100"
+              [ngModel]="editor.adjustments().contrast"
+              (ngModelChange)="editor.updateAdjustment('contrast', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Saturation -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Saturation</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().saturation }}</span>
+            </div>
+            <input
+              type="range"
+              min="-100"
+              max="100"
+              [ngModel]="editor.adjustments().saturation"
+              (ngModelChange)="editor.updateAdjustment('saturation', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Vibrance -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Vibrance</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().vibrance }}</span>
+            </div>
+            <input
+              type="range"
+              min="-100"
+              max="100"
+              [ngModel]="editor.adjustments().vibrance"
+              (ngModelChange)="editor.updateAdjustment('vibrance', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Warmth -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Warmth (Temperature)</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().warmth }}</span>
+            </div>
+            <input
+              type="range"
+              min="-100"
+              max="100"
+              [ngModel]="editor.adjustments().warmth"
+              (ngModelChange)="editor.updateAdjustment('warmth', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Vignette -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Vignette</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().vignette }}</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              [ngModel]="editor.adjustments().vignette"
+              (ngModelChange)="editor.updateAdjustment('vignette', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Blur -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Blur Effect</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().blur }}px</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="20"
+              [ngModel]="editor.adjustments().blur"
+              (ngModelChange)="editor.updateAdjustment('blur', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Hue Shift -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Hue Shift</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().hueShift }}°</span>
+            </div>
+            <input
+              type="range"
+              min="-180"
+              max="180"
+              [ngModel]="editor.adjustments().hueShift"
+              (ngModelChange)="editor.updateAdjustment('hueShift', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+
+          <!-- Sepia -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5 font-medium">
+              <span class="text-neutral-300">Sepia</span>
+              <span class="text-indigo-400 font-mono">{{ editor.adjustments().sepia }}%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              [ngModel]="editor.adjustments().sepia"
+              (ngModelChange)="editor.updateAdjustment('sepia', $event); editor.saveStateToHistory()"
+              class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- TAB 2: FILTERS -->
+    @if (editor.activeTool() === 'filters') {
+      <div class="space-y-5">
+        <h3 class="text-xs uppercase font-bold text-neutral-500 tracking-wider">
+          Filter Presets
+        </h3>
+
+        <!-- Filter Grid -->
+        <div class="grid grid-cols-2 gap-3">
+          @for (preset of filterPresets; track preset.id) {
+            <button
+              type="button"
+              (click)="setFilter(preset.id)"
+              [class.ring-2]="editor.activeFilter() === preset.id"
+              [class.ring-indigo-500]="editor.activeFilter() === preset.id"
+              [class.bg-neutral-800]="editor.activeFilter() === preset.id"
+              class="p-3 bg-neutral-900 hover:bg-neutral-800 rounded-xl border border-neutral-800 text-left transition-all group relative overflow-hidden"
+            >
+              <div class="text-xs font-semibold text-white mb-0.5 group-hover:text-indigo-400 transition-colors">
+                {{ preset.name }}
+              </div>
+              <div class="text-[10px] text-neutral-500 line-clamp-2">
+                {{ preset.description }}
+              </div>
+              @if (editor.activeFilter() === preset.id) {
+                <div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500"></div>
+              }
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- TAB 3: CROP & TRANSFORM -->
+    @if (editor.activeTool() === 'crop') {
+      <div class="space-y-6">
+        <h3 class="text-xs uppercase font-bold text-neutral-500 tracking-wider">
+          Rotate & Flip
+        </h3>
+
+        <!-- Rotate / Flip Controls -->
+        <div class="grid grid-cols-4 gap-2">
+          <button
+            type="button"
+            (click)="editor.rotateLeft()"
+            class="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-xl border border-neutral-700 flex flex-col items-center justify-center gap-1 text-xs text-neutral-200 transition-colors"
+          >
+            <mat-icon class="text-lg">rotate_left</mat-icon>
+            <span class="text-[10px]">90° L</span>
+          </button>
+          <button
+            type="button"
+            (click)="editor.rotateRight()"
+            class="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-xl border border-neutral-700 flex flex-col items-center justify-center gap-1 text-xs text-neutral-200 transition-colors"
+          >
+            <mat-icon class="text-lg">rotate_right</mat-icon>
+            <span class="text-[10px]">90° R</span>
+          </button>
+          <button
+            type="button"
+            (click)="editor.toggleFlipH()"
+            [class.bg-indigo-600]="editor.transform().flipH"
+            class="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-xl border border-neutral-700 flex flex-col items-center justify-center gap-1 text-xs text-neutral-200 transition-colors"
+          >
+            <mat-icon class="text-lg">flip</mat-icon>
+            <span class="text-[10px]">Flip H</span>
+          </button>
+          <button
+            type="button"
+            (click)="editor.toggleFlipV()"
+            [class.bg-indigo-600]="editor.transform().flipV"
+            class="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-xl border border-neutral-700 flex flex-col items-center justify-center gap-1 text-xs text-neutral-200 transition-colors"
+          >
+            <mat-icon class="text-lg rotate-90">flip</mat-icon>
+            <span class="text-[10px]">Flip V</span>
+          </button>
+        </div>
+
+        <h3 class="text-xs uppercase font-bold text-neutral-500 tracking-wider pt-2">
+          Aspect Ratio Guides
+        </h3>
+
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <button
+            type="button"
+            (click)="setAspectRatio('free')"
+            [class.border-indigo-500]="editor.transform().aspectRatio === 'free'"
+            [class.bg-neutral-800]="editor.transform().aspectRatio === 'free'"
+            class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-center hover:text-white transition-colors"
+          >
+            Free
+          </button>
+          <button
+            type="button"
+            (click)="setAspectRatio('1:1')"
+            [class.border-indigo-500]="editor.transform().aspectRatio === '1:1'"
+            [class.bg-neutral-800]="editor.transform().aspectRatio === '1:1'"
+            class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-center hover:text-white transition-colors"
+          >
+            1:1 Square
+          </button>
+          <button
+            type="button"
+            (click)="setAspectRatio('16:9')"
+            [class.border-indigo-500]="editor.transform().aspectRatio === '16:9'"
+            [class.bg-neutral-800]="editor.transform().aspectRatio === '16:9'"
+            class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-center hover:text-white transition-colors"
+          >
+            16:9 Wide
+          </button>
+          <button
+            type="button"
+            (click)="setAspectRatio('9:16')"
+            [class.border-indigo-500]="editor.transform().aspectRatio === '9:16'"
+            [class.bg-neutral-800]="editor.transform().aspectRatio === '9:16'"
+            class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-center hover:text-white transition-colors"
+          >
+            9:16 Story
+          </button>
+          <button
+            type="button"
+            (click)="setAspectRatio('4:3')"
+            [class.border-indigo-500]="editor.transform().aspectRatio === '4:3'"
+            [class.bg-neutral-800]="editor.transform().aspectRatio === '4:3'"
+            class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-center hover:text-white transition-colors"
+          >
+            4:3 Standard
+          </button>
+          <button
+            type="button"
+            (click)="setAspectRatio('3:2')"
+            [class.border-indigo-500]="editor.transform().aspectRatio === '3:2'"
+            [class.bg-neutral-800]="editor.transform().aspectRatio === '3:2'"
+            class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-center hover:text-white transition-colors"
+          >
+            3:2 Classic
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- TAB 4: DRAW & ANNOTATE -->
+    @if (editor.activeTool() === 'draw') {
+      <div class="space-y-6">
+        <h3 class="text-xs uppercase font-bold text-neutral-500 tracking-wider">
+          Brush Tools
+        </h3>
+
+        <!-- Mode selector: Brush vs Eraser -->
+        <div class="grid grid-cols-2 gap-2 bg-neutral-900 p-1 rounded-xl border border-neutral-800 text-xs font-semibold">
+          <button
+            type="button"
+            (click)="editor.isEraser.set(false)"
+            [class.bg-indigo-600]="!editor.isEraser()"
+            [class.text-white]="!editor.isEraser()"
+            class="py-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <mat-icon class="text-base">brush</mat-icon>
+            <span>Brush</span>
+          </button>
+          <button
+            type="button"
+            (click)="editor.isEraser.set(true)"
+            [class.bg-indigo-600]="editor.isEraser()"
+            [class.text-white]="editor.isEraser()"
+            class="py-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <mat-icon class="text-base">auto_fix_normal</mat-icon>
+            <span>Eraser</span>
+          </button>
+        </div>
+
+        <!-- Brush Color Swatches -->
+        @if (!editor.isEraser()) {
+          <div class="space-y-2">
+            <label class="text-xs font-medium text-neutral-400">Brush Color</label>
+            <div class="flex items-center gap-2">
+              <input
+                type="color"
+                [ngModel]="editor.brushColor()"
+                (ngModelChange)="editor.brushColor.set($event)"
+                class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border border-neutral-700"
+              />
+              <div class="flex flex-wrap gap-1.5">
+                @for (c of ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#ec4899', '#ffffff', '#000000']; track c) {
+                  <button
+                    type="button"
+                    (click)="editor.brushColor.set(c)"
+                    [style.backgroundColor]="c"
+                    class="w-6 h-6 rounded-full border border-neutral-700 ring-2 ring-transparent hover:scale-110 transition-transform"
+                  ></button>
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Brush Size -->
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between font-medium">
+            <span class="text-neutral-300">Size</span>
+            <span class="text-indigo-400 font-mono">{{ editor.brushSize() }}px</span>
+          </div>
+          <input
+            type="range"
+            min="2"
+            max="60"
+            [ngModel]="editor.brushSize()"
+            (ngModelChange)="editor.brushSize.set($event)"
+            class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+          />
+        </div>
+
+        <!-- Clear Drawings -->
+        <button
+          type="button"
+          (click)="editor.clearDrawings()"
+          class="w-full py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white rounded-xl text-xs font-medium border border-neutral-700 transition-colors"
+        >
+          Clear All Drawings
+        </button>
+
+        <h3 class="text-xs uppercase font-bold text-neutral-500 tracking-wider pt-2">
+          Text Overlay
+        </h3>
+
+        <div class="space-y-3">
+          <input
+            type="text"
+            placeholder="Enter text..."
+            [ngModel]="editor.newTextString()"
+            (ngModelChange)="editor.newTextString.set($event)"
+            class="w-full px-3 py-2 bg-neutral-900 border border-neutral-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
+          />
+          <button
+            type="button"
+            (click)="editor.addTextOverlay(editor.newTextString())"
+            class="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow transition-colors"
+          >
+            + Add Text
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- TAB 5: AI MAGIC STUDIO -->
+    @if (editor.activeTool() === 'ai') {
+      <div class="space-y-6">
+        <!-- AI One-Click Auto-Tune -->
+        <div class="p-4 bg-gradient-to-br from-indigo-950/60 via-neutral-900 to-purple-950/60 rounded-2xl border border-indigo-500/30 space-y-3">
+          <div class="flex items-center gap-2 text-indigo-300 text-xs font-bold uppercase tracking-wider">
+            <mat-icon class="text-base text-indigo-400 animate-pulse">auto_awesome</mat-icon>
+            <span>One-Click AI Director</span>
+          </div>
+          <p class="text-[11px] text-neutral-400 leading-relaxed">
+            Let Gemini 2.5 analyze composition, white balance, and lighting to automatically dial in professional adjustments.
+          </p>
+          <button
+            type="button"
+            (click)="editor.runAiAutoTune()"
+            [disabled]="editor.isAiProcessing()"
+            class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all"
+          >
+            <mat-icon class="text-base">auto_fix_high</mat-icon>
+            <span>Apply AI Auto-Tune</span>
+          </button>
+        </div>
+
+        <!-- AI Prompt Magic Edit -->
+        <div class="space-y-3">
+          <h3 class="text-xs uppercase font-bold text-neutral-500 tracking-wider">
+            Prompt-Based Magic Edit
+          </h3>
+          <p class="text-[11px] text-neutral-400">
+            Describe how you want to alter or enhance this image:
+          </p>
+          <textarea
+            rows="3"
+            placeholder="e.g. Turn this into a vintage 1980s VHS tape aesthetic with warm amber glow..."
+            [ngModel]="magicPromptInput()"
+            (ngModelChange)="magicPromptInput.set($event)"
+            class="w-full p-3 bg-neutral-900 border border-neutral-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 resize-none"
+          ></textarea>
+          
+          <button
+            type="button"
+            (click)="onMagicPromptSubmit()"
+            [disabled]="editor.isAiProcessing() || !magicPromptInput().trim()"
+            class="w-full py-2 bg-neutral-800 hover:bg-neutral-700 disabled:opacity-50 text-indigo-300 rounded-xl text-xs font-semibold border border-neutral-700 transition-colors"
+          >
+            Run Magic Prompt Edit
+          </button>
+
+          <!-- Quick Chips -->
+          <div class="space-y-1.5 pt-1">
+            <span class="text-[10px] text-neutral-500 font-medium">Quick Presets:</span>
+            <div class="flex flex-wrap gap-1.5">
+              @for (chip of quickPrompts; track chip) {
+                <button
+                  type="button"
+                  (click)="useQuickPrompt(chip)"
+                  class="px-2.5 py-1 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-lg text-[10px] text-neutral-300 hover:text-white transition-colors"
+                >
+                  {{ chip }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Analysis Rationale & Caption Display -->
+        @if (editor.aiAnalysisResult(); as result) {
+          <div class="p-4 bg-neutral-900 rounded-2xl border border-neutral-800 space-y-3">
+            <h4 class="text-xs font-bold text-neutral-200 flex items-center justify-between">
+              <span>AI Photo Analysis</span>
+              <span class="text-[10px] font-normal text-indigo-400">Gemini 2.5</span>
+            </h4>
+            
+            <p class="text-[11px] text-neutral-400 leading-relaxed italic">
+              "{{ result.explanation }}"
+            </p>
+
+            <div class="border-t border-neutral-800 pt-3 space-y-2">
+              <div class="flex justify-between items-center text-[10px] text-neutral-400">
+                <span class="font-semibold text-neutral-300">Suggested Caption:</span>
+                <button
+                  type="button"
+                  (click)="copyCaptionToClipboard(result.caption)"
+                  class="text-indigo-400 hover:underline"
+                >
+                  Copy
+                </button>
+              </div>
+              <p class="text-xs text-white bg-neutral-950 p-2.5 rounded-xl border border-neutral-800">
+                {{ result.caption }}
+              </p>
+              
+              <div class="flex flex-wrap gap-1 pt-1">
+                @for (tag of result.tags; track tag) {
+                  <span class="px-2 py-0.5 bg-neutral-800 text-neutral-400 text-[10px] rounded-md">
+                    {{ tag }}
+                  </span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+</aside>

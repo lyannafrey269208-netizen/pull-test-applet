@@ -1,0 +1,80 @@
+<aside class="w-16 h-full border-r border-neutral-800 bg-[#121212] flex flex-col items-center py-4 space-y-4 shrink-0 select-none z-20">
+  <!-- Adjust Tool -->
+  <button
+    type="button"
+    (click)="setTool('adjust')"
+    title="Color Adjustments"
+    [class.bg-neutral-800]="editor.activeTool() === 'adjust'"
+    [class.ring-1]="editor.activeTool() === 'adjust'"
+    [class.ring-indigo-500]="editor.activeTool() === 'adjust'"
+    [class.text-white]="editor.activeTool() === 'adjust'"
+    class="w-10 h-10 rounded-xl hover:bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white transition-all group relative"
+  >
+    <mat-icon class="text-xl">tune</mat-icon>
+  </button>
+
+  <!-- Filter Tool -->
+  <button
+    type="button"
+    (click)="setTool('filters')"
+    title="Filter Presets"
+    [class.bg-neutral-800]="editor.activeTool() === 'filters'"
+    [class.ring-1]="editor.activeTool() === 'filters'"
+    [class.ring-indigo-500]="editor.activeTool() === 'filters'"
+    [class.text-white]="editor.activeTool() === 'filters'"
+    class="w-10 h-10 rounded-xl hover:bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white transition-all group relative"
+  >
+    <mat-icon class="text-xl">filter_vintage</mat-icon>
+  </button>
+
+  <!-- Crop Tool -->
+  <button
+    type="button"
+    (click)="setTool('crop')"
+    title="Crop & Transform"
+    [class.bg-neutral-800]="editor.activeTool() === 'crop'"
+    [class.ring-1]="editor.activeTool() === 'crop'"
+    [class.ring-indigo-500]="editor.activeTool() === 'crop'"
+    [class.text-white]="editor.activeTool() === 'crop'"
+    class="w-10 h-10 rounded-xl hover:bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white transition-all group relative"
+  >
+    <mat-icon class="text-xl">crop</mat-icon>
+  </button>
+
+  <!-- Draw Tool -->
+  <button
+    type="button"
+    (click)="setTool('draw')"
+    title="Draw & Annotate"
+    [class.bg-neutral-800]="editor.activeTool() === 'draw'"
+    [class.ring-1]="editor.activeTool() === 'draw'"
+    [class.ring-indigo-500]="editor.activeTool() === 'draw'"
+    [class.text-white]="editor.activeTool() === 'draw'"
+    class="w-10 h-10 rounded-xl hover:bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white transition-all group relative"
+  >
+    <mat-icon class="text-xl">brush</mat-icon>
+  </button>
+
+  <!-- AI Studio Tool -->
+  <button
+    type="button"
+    (click)="setTool('ai')"
+    title="Gemini AI Studio"
+    [class.bg-neutral-800]="editor.activeTool() === 'ai'"
+    [class.ring-1]="editor.activeTool() === 'ai'"
+    [class.ring-indigo-500]="editor.activeTool() === 'ai'"
+    [class.text-indigo-400]="editor.activeTool() === 'ai'"
+    class="w-10 h-10 rounded-xl hover:bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-indigo-400 transition-all group relative"
+  >
+    <mat-icon class="text-xl text-indigo-400">auto_awesome</mat-icon>
+  </button>
+
+  <!-- Bottom Color Swatches Indicator -->
+  <div class="mt-auto mb-2 relative flex flex-col items-center">
+    <div
+      class="w-7 h-7 rounded-lg border border-neutral-700 shadow"
+      [style.backgroundColor]="editor.brushColor()"
+      title="Active Color"
+    ></div>
+  </div>
+</aside>
