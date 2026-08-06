@@ -4,3 +4,15 @@
   "requestFramePermissions": ["camera"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
+{
+  "name": "Generator Treści Social Media",
+  "description": "Generator postów i grafik dostosowanych do LinkedIn, Twitter/X oraz Instagrama przy użyciu modeli Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+{
+  "name": "Generator Treści Social Media",
+  "description": "Generator postów i grafik dostosowanych do LinkedIn, Twitter/X oraz Instagrama przy użyciu modeli Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
